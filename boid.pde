@@ -1,3 +1,24 @@
+/* The Image Block Boid Class
+
+Extends the boid class in order to link a block of pixels in an image to a boid and rended these pixels when drawing the boid.
+*/
+class ImgBlockBoid extends Boid {
+  
+  PImage img;
+  int[] imageCoord = new int[2];
+  int nx;
+  int ny;
+  
+  ImgBlockBoid(float x, float y, int px, int py, int w, int h, PImage pi) {
+    super(x, y);
+    imageCoord[0] = px;
+    imageCoord[1] = py;
+    nx = w;
+    ny = h;
+    img = pi;
+  }
+}
+
 // The Boid class
 
 class Boid {
