@@ -142,10 +142,10 @@ class Boid<T extends Boid> {
 
   // Wraparound
   void borders() {
-    if (position.x < -r) position.x = width+r;
-    if (position.y < -r) position.y = height+r;
-    if (position.x > width+r) position.x = -r;
-    if (position.y > height+r) position.y = -r;
+    if (position.x < 0) position.x = width;
+    if (position.y < -r) position.y = height;
+    if (position.x > width) position.x = 0;
+    if (position.y > height) position.y = 0;
   }
 
   // Separation
