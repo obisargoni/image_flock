@@ -2,7 +2,7 @@
 
 Extends the boid class in order to link a block of pixels in an image to a boid and rended these pixels when drawing the boid.
 */
-class ImgBlockBoid extends Boid {
+class ImgBlockBoid extends Boid<ImgBlockBoid> {
   
   PImage img;
   int[] imageCoord = new int[2];
@@ -41,7 +41,7 @@ class ImgBlockBoid extends Boid {
 
 // The Boid class
 
-class Boid {
+class Boid<T extends Boid> {
 
   PVector position;
   PVector velocity;
@@ -66,7 +66,7 @@ class Boid {
     maxforce = 0.03;
   }
 
-  void run(ArrayList<Boid> boids) {
+  void run(ArrayList<T> boids) {
     flock(boids);
     update();
     borders();
@@ -79,7 +79,7 @@ class Boid {
   }
 
   // We accumulate a new acceleration each time based on three rules
-  void flock(ArrayList<Boid> boids) {
+  void flock(ArrayList<T> boids) {
     PVector sep = separate(boids);   // Separation
     PVector ali = align(boids);      // Alignment
     PVector coh = cohesion(boids);   // Cohesion
@@ -150,7 +150,7 @@ class Boid {
 
   // Separation
   // Method checks for nearby boids and steers away
-  PVector separate (ArrayList<Boid> boids) {
+  PVector separate (ArrayList<T> boids) {
     float desiredseparation = 25.0f;
     PVector steer = new PVector(0, 0, 0);
     int count = 0;
@@ -189,7 +189,7 @@ class Boid {
 
   // Alignment
   // For every nearby boid in the system, calculate the average velocity
-  PVector align (ArrayList<Boid> boids) {
+  PVector align (ArrayList<T> boids) {
     float neighbordist = 50;
     PVector sum = new PVector(0, 0);
     int count = 0;
@@ -220,7 +220,7 @@ class Boid {
 
   // Cohesion
   // For the average position (i.e. center) of all nearby boids, calculate steering vector towards that position
-  PVector cohesion (ArrayList<Boid> boids) {
+  PVector cohesion (ArrayList<T> boids) {
     float neighbordist = 50;
     PVector sum = new PVector(0, 0);   // Start with empty vector to accumulate all positions
     int count = 0;
