@@ -8,27 +8,15 @@ void setup() {
   
   img = loadImage("obipic.jpg");
   int resizedWidth = img.width / resizeFactor;
-  print(img.width);
   img.resize(resizedWidth, 0);
-  print(img.width);
-  print(resizedWidth);
-  flock = new Flock();
-  // Add an initial set of boids into the system
-  for (int i = 0; i < 150; i++) {
-    flock.addBoid(new Boid(width/2,height/2));
-  }
-  
-  ibb = new ImgBlockBoid(0.0, 0.0, 0, 0, 10, 10, img);
-  
+
+  // Create an image block boid flock
+  flock = new Flock(img, 50, 50);
 }
 
 void draw() {
   background(50);
-  image(img, 0, 0);
-  //flock.run();
-  ibb.render();
-  PVector d = new PVector(1,0);
-  ibb.position.add(d);
+  flock.run();
 }
 
 // Add a new boid into the System
