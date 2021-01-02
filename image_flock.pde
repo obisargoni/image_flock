@@ -41,10 +41,32 @@ void mousePressed() {
 // The Flock (a list of Boid objects)
 
 class Flock {
-  ArrayList<Boid> boids; // An ArrayList for all the boids
+  ArrayList<ImgBlockBoid> boids; // An ArrayList for all the boids
 
-  Flock() {
-    boids = new ArrayList<Boid>(); // Initialize the ArrayList
+  Flock(PImage img, int blockWidth, int blockHeight) {
+    boids = new ArrayList<ImgBlockBoid>(); // Initialize the ArrayList
+    
+    int cumBlockWidth = 0;
+    int cumBlockHeight = 0;
+    
+    while (cumBlockHeight < img.height) {
+      // Controls for number of pixels in image not dividing equally into blocks of height blockHeight
+      int bh = min(blockHeight, img.height - cumBlockHeight);
+
+      while (cumBlockWidth < img.width) {
+        
+        // Controls for number of pixels in image not dividing equally into blocks of width blockWidth
+        int bw = min(blockWidth, img.width - cumBlockWidth);
+        
+        ImgBlockBoid ibb = new ImgBlockBoid(cumBlockWidth, cumBlockHeight, cumBlockWidth, cumBlockHeight, bw, bh, img);
+        boids.add(ibb);
+        
+        cumBlockWidth += bw;
+      }
+      cumBlockWidth = 0;
+      cumBlockHeight += bh;
+    }   
+    
   }
 
   void run() {
