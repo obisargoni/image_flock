@@ -28,10 +28,15 @@ class ImgBlockBoid extends Boid<ImgBlockBoid> {
     // Loop through image pixel locations assigned to this block and draw in new position
     for (int y = 0; y < ny; y++) {
       for (int x = 0; x < nx; x++) {
-      int imgloc = (x+imageCoord[0]) + (y+imageCoord[1])*img.width;
-      int canvasloc = (x+(int)position.x) + (y+(int)position.y)*width;
-      
-      pixels[canvasloc] = img.pixels[imgloc];
+        int canvasX = x+(int)position.x;
+        int canvasY = y+(int)position.y;
+        
+        // Check that location is on canvas, don't draw if out of range
+        if ((0<=canvasX) & (canvasX<width) & (0<=canvasY) & (canvasY<height)) {
+          int imgloc = (x+imageCoord[0]) + (y+imageCoord[1])*img.width;
+          int canvasloc = (canvasX) + (canvasY)*width;
+          pixels[canvasloc] = img.pixels[imgloc];
+        }
       }
     }
     updatePixels();
