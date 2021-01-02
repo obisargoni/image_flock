@@ -17,6 +17,26 @@ class ImgBlockBoid extends Boid {
     ny = h;
     img = pi;
   }
+  
+  /*
+  Draw the pixels assigned to this image block at the boid location
+  */
+  void render() {
+    loadPixels();
+    img.loadPixels();
+    
+    // Loop through image pixel locations assigned to this block and draw in new position
+    for (int y = 0; y < ny; y++) {
+      for (int x = 0; x < nx; x++) {
+      int imgloc = (x+imageCoord[0]) + (y+imageCoord[1])*img.width;
+      int canvasloc = (x+(int)position.x) + (y+(int)position.y)*width;
+      
+      pixels[canvasloc] = img.pixels[imgloc];
+      }
+    }
+    updatePixels();
+  }
+  
 }
 
 // The Boid class
