@@ -21,7 +21,7 @@ void draw() {
 
 // Add a new boid into the System
 void mousePressed() {
-  flock.addBoid(new Boid(mouseX,mouseY));
+  //flock.addBoid(new Boid(mouseX,mouseY));
 }
 
 
