@@ -75,7 +75,11 @@ class Flock {
     }
   }
 
-  void addBoid(Boid b) {
+  void addBoid(ImgBlockBoid b) {
     boids.add(b);
+  }
+  
+  ImgBlockBoid get(int i) {
+    return boids.get(i);
   }
 }
