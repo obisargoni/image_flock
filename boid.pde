@@ -9,8 +9,8 @@ class ImgBlockBoid extends Boid<ImgBlockBoid> {
   int nx;
   int ny;
   
-  ImgBlockBoid(float x, float y, int ix, int iy, int w, int h, PImage pi) {
-    super(x, y);
+  ImgBlockBoid(int x, int y, int ix, int iy, int w, int h, PImage pi) {
+    super((float)x, (float)y);
     imageCoord[0] = ix;
     imageCoord[1] = iy;
     nx = w;
