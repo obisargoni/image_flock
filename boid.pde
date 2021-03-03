@@ -21,7 +21,7 @@ class ImgBlockBoid extends Boid<ImgBlockBoid> {
   /*
   Draw the pixels assigned to this image block at the boid location
   */
-  void render() {
+  void renderExact() {
     loadPixels();
     img.loadPixels();
     
@@ -42,6 +42,24 @@ class ImgBlockBoid extends Boid<ImgBlockBoid> {
     updatePixels();
   }
   
+  /*
+  Render each boid as a circle of uniform colour takes from a sample of the corresponding pixels
+  */
+  void render() {
+    img.loadPixels();
+    
+    // No need to loop through all coordinates
+    
+    // If location is on canvas render boid as circle here
+    if ((0<=position.x) & (position.x<width) & (0<=position.y) & (position.y<height)) {
+      
+      // Get colour of image near this location (at centre of where the circle will be)
+      color c = img.get(nx/2 + imageCoord[0], ny/2 + imageCoord[1]);
+      fill(c);
+      noStroke();
+      ellipse(position.x, position.y, nx, ny);
+    }
+  }
 }
 
 // The Boid class

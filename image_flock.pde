@@ -11,7 +11,7 @@ void setup() {
   img.resize(resizedWidth, 0);
 
   // Create an image block boid flock
-  flock = new Flock(img, 50, 50);
+  flock = new Flock(img, 10, 10);
 }
 
 void draw() {
