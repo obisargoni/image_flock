@@ -1,21 +1,26 @@
 Flock flock;
 ImgBlockBoid ibb;
 PImage img;
+PImage flockImg;
 int resizeFactor = 3;
 
 void setup() {
-  size(1280, 720);
+  size(1053, 237);
   
-  img = loadImage("obipic.jpg");
-  int resizedWidth = img.width / resizeFactor;
-  img.resize(resizedWidth, 0);
+  img = loadImage("IMG_0086.JPG");
+  //float resizedWidth = img.width  ( width / img.width);
+  //int resizedWidth = round(img.width / resizeFactor);
+  img.resize(width, 0);
+  
+  flockImg = loadImage("8-85316_walking-icon.jpg");
+  flockImg.resize( flockImg.width / resizeFactor, 0);
 
   // Create an image block boid flock
-  flock = new Flock(img, 10, 10);
+  flock = new Flock(flockImg, 10, 10);
 }
 
 void draw() {
-  background(50);
+  image(img, 0, 0);
   flock.run();
 }
 
