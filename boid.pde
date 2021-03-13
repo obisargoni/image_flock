@@ -43,9 +43,9 @@ class ImgBlockBoid extends Boid<ImgBlockBoid> {
   }
   
   /*
-  Render each boid as a circle of uniform colour takes from a sample of the corresponding pixels
+  Render image boid as a circle with the colour of the circle set as the colour of one of the pixels of the image this boid represents
   */
-  void render() {
+  void renderAprox() {
     img.loadPixels();
     
     // No need to loop through all coordinates
@@ -58,6 +58,19 @@ class ImgBlockBoid extends Boid<ImgBlockBoid> {
       fill(c);
       noStroke();
       ellipse(position.x, position.y, nx, ny);
+    }
+  
+  }
+  
+  /*
+  Render each boid as a circle of uniform colour takes from a sample of the corresponding pixels
+  */
+  void render() {
+    if(roosting) {
+      renderExact();
+    }
+    else {
+      renderAprox();
     }
   }
 }
@@ -72,6 +85,8 @@ class Boid<T extends Boid> {
   float r;
   float maxforce;    // Maximum steering force
   float maxspeed;    // Maximum speed
+  boolean roosting = true; // Used to control when boid remains stationary
+  int disturbDistance = 50;
 
     Boid(float x, float y) {
     acceleration = new PVector(0, 0);
@@ -90,11 +105,27 @@ class Boid<T extends Boid> {
   }
 
   void run(ArrayList<T> boids) {
-    flock(boids);
-    update();
-    borders();
+    updateRoosting();
+    if(!roosting) {
+      flock(boids);
+      update();
+      borders();
+    }
     render();
   }
+  
+  void updateRoosting() {
+    // If mouse moves close to boid, boid stops roosting
+    
+    // Don't disturb if mouse at default pos
+    boolean mouseDefault = (mouseX==0) & (mouseY==0);
+    boolean closeX = abs(mouseX-position.x) < disturbDistance;
+    boolean closeY = abs(mouseY-position.y) < disturbDistance;
+    if (closeX & closeY & !mouseDefault) {
+      roosting = false;
+    }
+  }
+  
 
   void applyForce(PVector force) {
     // We could add mass here if we want A = F / M
